@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پشتیبانی - Took Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff3b8d;
+            --primary-light: #ff6bac;
+            --dark: #333;
+            --light: #fff;
+            --border: #ffd6e8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #fff5f9 0%, #ffe6f2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* هدر */
+        .support-header {
+            text-align: center;
+            margin: 30px 0 50px;
+        }
+        
+        .support-header h1 {
+            color: var(--primary);
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        /* شبکه سرویس‌ها */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        @media (min-width: 768px) {
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(255, 59, 141, 0.1);
+            border: 2px solid var(--border);
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 35px;
+            color: white;
+        }
+        
+        .service-title {
+            color: var(--dark);
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        
+        .service-desc {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        /* فرم تماس */
+        .contact-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(255, 59, 141, 0.1);
+            margin-bottom: 50px;
+            border: 2px solid var(--border);
+        }
+        
+        .section-title {
+            color: var(--primary);
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+        
+        .contact-form .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .contact-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background: #ff2a7c;
+        }
+        
+        /* اطلاعات تماس */
+        .contact-info {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(255, 59, 141, 0.1);
+            margin-bottom: 50px;
+            border: 2px solid var(--border);
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 20px;
+            font-size: 25px;
+            color: white;
+        }
+        
+        .info-content h4 {
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .info-content p {
+            color: #666;
+        }
+        
+        .back-btn {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="support-header">
+            <h1><i class="fas fa-headset"></i> پشتیبانی و ارتباط با ما</h1>
+            <p style="color: #666; font-size: 18px; max-width: 600px; margin: 0 auto;">ما اینجا هستیم تا به شما کمک کنیم</p>
+        </div>
+        
+        <!-- شبکه سرویس‌ها -->
+        <div class="services-grid">
+            <!-- پیگیری سفارش -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <h3 class="service-title">پیگیری سفارش</h3>
+                <p class="service-desc">وضعیت سفارش خود را پیگیری کنید و از آخرین وضعیت آن مطلع شوید</p>
+                <button class="submit-btn" onclick="trackOrder()">
+                    پیگیری سفارش
+                </button>
+            </div>
+            
+            <!-- پشتیبانی تلفنی -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <h3 class="service-title">پشتیبانی تلفنی</h3>
+                <p class="service-desc">با شماره‌های پشتیبانی تماس بگیرید و سوالات خود را بپرسید</p>
+                <button class="submit-btn" onclick="window.location.href='tel:02112345678'">
+                    تماس بگیرید
+                </button>
+            </div>
+            
+            <!-- سوالات متداول -->
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <h3 class="service-title">سوالات متداول</h3>
+                <p class="service-desc">پاسخ سوالات رایج خود را در بخش سوالات متداول پیدا کنید</p>
+                <button class="submit-btn" onclick="showFAQ()">
+                    مشاهده سوالات
+                </button>
+            </div>
+        </div>
+        
+        <!-- فرم تماس -->
+        <div class="contact-section">
+            <h2 class="section-title"><i class="fas fa-envelope"></i> ارسال پیام به پشتیبانی</h2>
+            
+            <form class="contact-form" onsubmit="sendSupportMessage(event)">
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-user"></i> نام و نام خانوادگی</label>
+                    <input type="text" id="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> ایمیل</label>
+                    <input type="email" id="email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone"><i class="fas fa-phone"></i> شماره تماس</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message"><i class="fas fa-comment"></i> پیام شما</label>
+                    <textarea id="message" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> ارسال پیام
+                </button>
+            </form>
+        </div>
+        
+        <!-- اطلاعات تماس -->
+        <div class="contact-info">
+            <h2 class="section-title"><i class="fas fa-address-card"></i> اطلاعات تماس</h2>
+            
+            <div class="info-item">
+                <div class="info-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="info-content">
+                    <h4>تلفن پشتیبانی</h4>
+                    <p>۰۲۱-۱۲۳۴۵۶۷۸</p>
+                    <p>۰۹۱۲۱۲۳۴۵۶۷</p>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <div class="info-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="info-content">
+                    <h4>ایمیل</h4>
+                    <p>info@tookgallery.ir</p>
+                    <p>support@tookgallery.ir</p>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <div class="info-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="info-content">
+                    <h4>آدرس</h4>
+                    <p>تهران، خیابان ولیعصر، پلاک ۱۲۳۴</p>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <div class="info-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="info-content">
+                    <h4>ساعات کاری</h4>
+                    <p>شنبه تا چهارشنبه: ۹ صبح تا ۶ عصر</p>
+                    <p>پنجشنبه: ۹ صبح تا ۱ بعدازظهر</p>
+                </div>
+            </div>
+        </div>
+        
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-right"></i> بازگشت به صفحه اصلی
+        </a>
+    </div>
+
+    <script>
+        // بررسی اگر کاربر با پیام پیگیری وارد شده
+        document.addEventListener('DOMContentLoaded', function() {
+            const trackMessage = localStorage.getItem('trackOrderMessage');
+            if (trackMessage) {
+                document.getElementById('message').value = trackMessage;
+                document.getElementById('name').focus();
+                
+                // نمایش اطلاع‌رسانی
+                const notification = document.createElement('div');
+                notification.innerHTML = `
+                    <div style="
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: linear-gradient(90deg, #ff3b8d, #ff6bac);
+                        color: white;
+                        padding: 15px 20px;
+                        border-radius: 10px;
+                        box-shadow: 0 5px 20px rgba(255, 59, 141, 0.3);
+                        z-index: 9999;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        animation: slideIn 0.3s ease;
+                        max-width: 400px;
+                    ">
+                        <i class="fas fa-info-circle" style="font-size: 20px;"></i>
+                        <span>پیام پیگیری سفارش به طور خودکار پر شد. فقط روی "ارسال" کلیک کنید.</span>
+                        <button onclick="this.parentElement.remove()" style="
+                            background: none;
+                            border: none;
+                            color: white;
+                            font-size: 20px;
+                            cursor: pointer;
+                            margin-right: auto;
+                        ">×</button>
+                    </div>
+                `;
+                document.body.appendChild(notification);
+                
+                // حذف خودکار پس از 10 ثانیه
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.remove();
+                    }
+                }, 10000);
+                
+                // پاک کردن پیام موقت
+                localStorage.removeItem('trackOrderMessage');
+            }
+            
+            // پر کردن اطلاعات کاربر اگر لاگین کرده
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user) {
+                document.getElementById('name').value = `${user.firstName} ${user.lastName}`;
+                document.getElementById('phone').value = user.phone || '';
+            }
+        });
+        
+        // تابع پیگیری سفارش
+        function trackOrder() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user) {
+                localStorage.setItem('trackOrderMessage', `با سلام، لطفاً وضعیت سفارش من را بررسی کنید. نام: ${user.firstName} ${user.lastName} - شماره تماس: ${user.phone}`);
+                document.getElementById('message').value = `با سلام، لطفاً وضعیت سفارش من را بررسی کنید. نام: ${user.firstName} ${user.lastName} - شماره تماس: ${user.phone}`;
+                document.getElementById('message').focus();
+            } else {
+                alert('لطفاً ابتدا وارد حساب کاربری خود شوید');
+                window.location.href = 'profile.html';
+            }
+        }
+        
+        // ارسال پیام پشتیبانی
+        function sendSupportMessage(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const message = document.getElementById('message').value;
+            
+            // ذخیره پیام‌های ارسال شده
+            const supportMessages = JSON.parse(localStorage.getItem('supportMessages')) || [];
+            supportMessages.push({
+                name: name,
+                message: message,
+                date: new Date().toLocaleString('fa-IR'),
+                status: 'در انتظار پاسخ'
+            });
+            
+            localStorage.setItem('supportMessages', JSON.stringify(supportMessages));
+            
+            alert('پیام شما با موفقیت ارسال شد. کارشناسان ما به زودی با شما تماس خواهند گرفت.');
+            
+            // ریست فرم
+            event.target.reset();
+            
+            // پاک کردن پیام پیگیری اگر وجود داشت
+            localStorage.removeItem('trackOrderMessage');
+        }
+        
+        // نمایش سوالات متداول
+        function showFAQ() {
+            const faq = [
+                { q: "چطور می‌توانم سفارشم را پیگیری کنم؟", a: "از طریق صفحه پشتیبانی و بخش پیگیری سفارش می‌توانید وضعیت سفارش خود را مشاهده کنید." },
+                { q: "زمان ارسال سفارش چقدر است؟", a: "سفارشات تهران ۲۴ ساعت و سایر شهرها ۲-۳ روز کاری ارسال می‌شوند." },
+                { q: "چطور می‌توانم محصول را مرجوع کنم؟", a: "تا ۷ روز پس از دریافت می‌توانید از طریق پنل کاربری درخواست مرجوعی ثبت کنید." }
+            ];
+            
+            let faqHTML = '<div style="text-align: right; direction: rtl;">';
+            faq.forEach((item, index) => {
+                faqHTML += `
+                    <div style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
+                        <h4 style="color: #ff3b8d; margin-bottom: 10px;">${item.q}</h4>
+                        <p style="color: #666;">${item.a}</p>
+                    </div>
+                `;
+            });
+            faqHTML += '</div>';
+            
+            alert(faqHTML.replace(/\n/g, ''));
+        }
+    </script>
+</body>
+                  </html>
