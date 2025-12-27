@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>علاقه‌مندی‌ها - Took Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff3b8d;
+            --dark: #333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+        
+        body {
+            background: #fff5f9;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(255, 59, 141, 0.1);
+            border-top: 5px solid var(--primary);
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
+        
+        .empty-wishlist {
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-wishlist i {
+            font-size: 80px;
+            color: #ffd6e8;
+            margin-bottom: 20px;
+        }
+        
+        .wishlist-item {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            text-align: right;
+            border: 1px solid #ffd6e8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 25px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-heart"></i> لیست علاقه‌مندی‌های شما</h1>
+        
+        <div id="wishlistContainer">
+            <div class="empty-wishlist">
+                <i class="fas fa-heart"></i>
+                <h3>لیست علاقه‌مندی‌های شما خالی است</h3>
+                <p>محصولاتی که علامت قلب می‌زنید اینجا نمایش داده می‌شوند</p>
+            </div>
+        </div>
+        
+        <a href="index.html" class="back-btn">بازگشت به صفحه اصلی</a>
+    </div>
+
+    <script>
+        // بارگذاری علاقه‌مندی‌ها
+        function loadWishlist() {
+            const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            const container = document.getElementById('wishlistContainer');
+            
+            if (wishlist.length === 0) return;
+            
+            const products = [
+                { id: 1, name: "محصول نمونه ۱", category: "دسته‌بندی ۱" },
+                { id: 2, name: "محصول نمونه ۲", category: "دسته‌بندی ۲" },
+                { id: 3, name: "محصول نمونه ۳", category: "دسته‌بندی ۱" },
+                { id: 4, name: "محصول نمونه ۴", category: "دسته‌بندی ۳" },
+                { id: 5, name: "محصول نمونه ۵", category: "دسته‌بندی ۲" },
+                { id: 6, name: "محصول نمونه ۶", category: "دسته‌بندی ۱" },
+                { id: 7, name: "محصول نمونه ۷", category: "دسته‌بندی ۳" },
+                { id: 8, name: "محصول نمونه ۸", category: "دسته‌بندی ۲" }
+            ];
+            
+            let html = '';
+            wishlist.forEach(productId => {
+                const product = products.find(p => p.id === productId);
+                if (product) {
+                    html += `
+                        <div class="wishlist-item">
+                            <div>
+                                <h3>${product.name}</h3>
+                                <p>دسته‌بندی: ${product.category}</p>
+                            </div>
+                            <button onclick="removeFromWishlist(${productId})" style="
+                                background: #ff4757; 
+                                color: white; 
+                                border: none; 
+                                padding: 8px 15px; 
+                                border-radius: 5px; 
+                                cursor: pointer;
+                            ">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </div>
+                    `;
+                }
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // حذف از علاقه‌مندی‌ها
+        function removeFromWishlist(productId) {
+            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            wishlist = wishlist.filter(id => id !== productId);
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            loadWishlist();
+            alert('از علاقه‌مندی‌ها حذف شد');
+        }
+        
+        // بارگذاری اولیه
+        document.addEventListener('DOMContentLoaded', loadWishlist);
+    </script>
+</body>
+</html>
