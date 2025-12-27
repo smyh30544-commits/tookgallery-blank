@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گالری هنری | سایت خام</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* استایل موقت تا فایل CSS بسازیم */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* هدر */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-placeholder {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            color: #6c63ff;
+            font-weight: bold;
+        }
+        
+        .logo-placeholder i {
+            font-size: 28px;
+        }
+        
+        .nav-list {
+            display: none; /* در موبایل مخفی */
+            list-style: none;
+            gap: 25px;
+        }
+        
+        .nav-list a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-list a:hover,
+        .nav-list a.active {
+            color: #6c63ff;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .header-actions a {
+            color: #555;
+            font-size: 20px;
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* منوی موبایل */
+        .menu-toggle {
+            display: block;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #555;
+            cursor: pointer;
+        }
+        
+        /* هیرو */
+        .hero {
+            background: linear-gradient(135deg, #6c63ff 0%, #4a44c6 100%);
+            color: white;
+            padding: 120px 0 80px;
+            margin-top: 60px;
+            text-align: center;
+        }
+        
+        .hero-title {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .hero-text {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: white;
+            color: #6c63ff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* دسته‌بندی‌ها */
+        .categories {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 40px;
+            color: #333;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .category-img {
+            height: 150px;
+            background: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 50px;
+        }
+        
+        .category-name {
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        /* گالری */
+        .gallery {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .artwork {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .artwork-img {
+            height: 180px;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 40px;
+        }
+        
+        .artwork-info {
+            padding: 15px;
+        }
+        
+        .artwork-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .artwork-artist {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* فوتر */
+        .footer {
+            background: #333;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #6c63ff;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-icons a {
+            color: white;
+            background: #444;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: #6c63ff;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* برای موبایل */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 26px;
+            }
+            
+            .categories-grid,
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .categories-grid,
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                padding: 100px 0 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- هدر سایت -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <!-- لوگو -->
+                <div class="logo">
+                    <a href="#">
+                        <div class="logo-placeholder">
+                            <i class="fas fa-palette"></i>
+                            <span>گالری هنری</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- دکمه منوی موبایل -->
+                <button class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- آیکون‌های سمت چپ -->
+                <div class="header-actions">
+                    <a href="#" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">۰</span>
+                    </a>
+                    <a href="#" class="user-icon">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- بخش اصلی هیرو -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">به گالری هنری خوش آمدید</h1>
+                <p class="hero-text">این یک سایت خام با ساختار tookgallery.ir است</p>
+                <a href="#" class="btn btn-primary">مشاهده آثار</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش دسته‌بندی‌ها -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">دسته‌بندی آثار</h2>
+            <div class="categories-grid">
+                <!-- دسته ۱ -->
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <div class="category-name">نقاشی</div>
+                </div>
+                
+                <!-- دسته ۲ -->
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <div class="category-name">عکاسی</div>
+                </div>
+                
+                <!-- دسته ۳ -->
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-sculpture"></i>
+                    </div>
+                    <div class="category-name">مجسمه</div>
+                </div>
+                
+                <!-- دسته ۴ -->
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-digital-tachograph"></i>
+                    </div>
+                    <div class="category-name">هنر دیجیتال</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش گالری آثار -->
+    <section class="gallery">
+        <div class="container">
+            <h2 class="section-title">آثار ویژه</h2>
+            <div class="gallery-grid">
+                <!-- اثر ۱ -->
+                <div class="artwork">
+                    <div class="artwork-img">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="artwork-info">
+                        <div class="artwork-title">عنوان اثر هنری</div>
+                        <div class="artwork-artist">نام هنرمند</div>
+                    </div>
+                </div>
+                
+                <!-- اثر ۲ -->
+                <div class="artwork">
+                    <div class="artwork-img">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="artwork-info">
+                        <div class="artwork-title">عنوان اثر هنری</div>
+                        <div class="artwork-artist">نام هنرمند</div>
+                    </div>
+                </div>
+                
+                <!-- اثر ۳ -->
+                <div class="artwork">
+                    <div class="artwork-img">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="artwork-info">
+                        <div class="artwork-title">عنوان اثر هنری</div>
+                        <div class="artwork-artist">نام هنرمند</div>
+                    </div>
+                </div>
+                
+                <!-- اثر ۴ -->
+                <div class="artwork">
+                    <div class="artwork-img">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="artwork-info">
+                        <div class="artwork-title">عنوان اثر هنری</div>
+                        <div class="artwork-artist">نام هنرمند</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- فوتر -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- بخش درباره -->
+                <div class="footer-about">
+                    <h3 class="footer-title">درباره گالری</h3>
+                    <p>این یک سایت خام با ساختار tookgallery.ir می‌باشد. همه بخش‌ها به صورت placeholder هستند.</p>
+                </div>
+                
+                <!-- لینک‌های سریع -->
+                <div class="footer-links">
+                    <h3 class="footer-title">لینک‌های سریع</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">صفحه اصلی</a></li>
+                        <li><a href="#">گالری آثار</a></li>
+                        <li><a href="#">فروشگاه</a></li>
+                        <li><a href="#">تماس با ما</a></li>
+                    </ul>
+                </div>
+                
+                <!-- تماس -->
+                <div class="footer-contact">
+                    <h3 class="footer-title">تماس با ما</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> آدرس: تهران، خیابان نمونه</li>
+                        <li><i class="fas fa-phone"></i> تلفن: ۰۲۱-۱۲۳۴۵۶۷۸</li>
+                        <li><i class="fas fa-envelope"></i> ایمیل: info@example.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- شبکه‌های اجتماعی -->
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            
+            <!-- کپی‌رایت -->
+            <div class="copyright">
+                <p>© ۲۰۲۳ گالری هنری. تمامی حقوق محفوظ است. (سایت خام)</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- اسکریپت‌ها -->
+    <script>
+        // منوی موبایل
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            alert('منوی موبایل - این بخش در نسخه کامل باز می‌شود');
+        });
+        
+        // شمارنده سبد خرید (نمونه)
+        let cartCount = 0;
+        document.querySelector('.cart-icon').addEventListener('click', function(e) {
+            e.preventDefault();
+            cartCount++;
+            document.querySelector('.cart-count').textContent = cartCount;
+        });
+    </script>
+</body>
+  </html>
