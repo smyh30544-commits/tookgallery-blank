@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پروفایل کاربری - Took Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff3b8d;
+            --primary-light: #ff6bac;
+            --dark: #333;
+            --light: #fff;
+            --border: #ffd6e8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #fff5f9 0%, #ffe6f2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+        }
+        
+        .profile-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(255, 59, 141, 0.15);
+            border-top: 5px solid var(--primary);
+        }
+        
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .profile-header h1 {
+            color: var(--primary);
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
+        
+        .form-section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .form-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: #ff2a7c;
+        }
+        
+        .back-btn {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-box">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h1>پروفایل کاربری</h1>
+                <p>ورود / ثبت نام در سایت</p>
+            </div>
+            
+            <!-- مرحله ۱: ورود با شماره -->
+            <div id="step1" class="form-section active">
+                <div class="message" style="background: #e3f2fd; color: #1565c0;">
+                    <i class="fas fa-info-circle"></i>
+                    لطفاً شماره موبایل خود را وارد کنید
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> شماره موبایل</label>
+                    <input type="tel" id="phone" placeholder="مثال: ۰۹۱۲۱۲۳۴۵۶۷" maxlength="11">
+                </div>
+                
+                <button class="btn" onclick="sendVerificationCode()">
+                    <i class="fas fa-paper-plane"></i> ارسال کد تایید
+                </button>
+                
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-right"></i> بازگشت به صفحه اصلی
+                </a>
+            </div>
+            
+            <!-- مرحله ۲: کد تایید -->
+            <div id="step2" class="form-section">
+                <div class="message" style="background: #e3f2fd; color: #1565c0;">
+                    <i class="fas fa-sms"></i>
+                    کد تأیید به شماره <span id="phoneNumber"></span> ارسال شد
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-key"></i> کد تأیید ۴ رقمی</label>
+                    <input type="text" id="verificationCode" placeholder="____" maxlength="4">
+                </div>
+                
+                <button class="btn" onclick="verifyCode()">
+                    <i class="fas fa-check-circle"></i> تأیید کد
+                </button>
+            </div>
+            
+            <!-- مرحله ۳: تکمیل اطلاعات -->
+            <div id="step3" class="form-section">
+                <div class="message success">
+                    <i class="fas fa-check-circle"></i>
+                    کد تأیید شد. لطفاً اطلاعات خود را تکمیل کنید
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> نام</label>
+                    <input type="text" id="firstName" placeholder="نام خود را وارد کنید">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-user-tag"></i> نام خانوادگی</label>
+                    <input type="text" id="lastName" placeholder="نام خانوادگی خود را وارد کنید">
+                </div>
+                
+                <button class="btn" onclick="completeProfile()">
+                    <i class="fas fa-save"></i> تکمیل ثبت نام
+                </button>
+            </div>
+            
+            <!-- مرحله ۴: پروفایل کاربر -->
+            <div id="step4" class="form-section">
+                <div class="message success">
+                    <i class="fas fa-check-circle"></i>
+                    به پنل کاربری خود خوش آمدید
+                </div>
+                
+                <div style="text-align: center; padding: 20px;">
+                    <h2 id="displayName" style="color: #333; margin-bottom: 10px;">کاربر عزیز</h2>
+                    <p id="displayPhone" style="color: #666; margin-bottom: 30px;">شماره تماس: -</p>
+                    
+                    <button class="btn" onclick="window.location.href='index.html'" style="margin-bottom: 10px;">
+                        <i class="fas fa-home"></i> بازگشت به سایت
+                    </button>
+                    
+                    <button class="btn" onclick="logout()" style="background: #666;">
+                        <i class="fas fa-sign-out-alt"></i> خروج
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let verificationCode = "";
+        let userPhone = "";
+        
+        // تغییر مرحله
+        function changeStep(step) {
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(`step${step}`).classList.add('active');
+            currentStep = step;
+        }
+        
+        // ارسال کد تأیید
+        function sendVerificationCode() {
+            userPhone = document.getElementById('phone').value;
+            
+            if (!userPhone || userPhone.length !== 11 || !userPhone.startsWith('09')) {
+                alert('لطفاً شماره موبایل معتبر وارد کنید');
+                return;
+            }
+            
+            // تولید کد تصادفی
+            verificationCode = Math.floor(1000 + Math.random() * 9000).toString();
+            
+            // نمایش شماره در مرحله بعد
+            document.getElementById('phoneNumber').textContent = userPhone;
+            
+            // تغییر به مرحله کد تأیید
+            changeStep(2);
+            
+            // نمایش کد (در واقعیت اینجا کد به سرور ارسال می‌شود)
+            alert(`کد تأیید: ${verificationCode} (این برای تست است)`);
+        }
+        
+        // تأیید کد
+        function verifyCode() {
+            const enteredCode = document.getElementById('verificationCode').value;
+            
+            if (enteredCode === verificationCode) {
+                changeStep(3);
+            } else {
+                alert('کد تأیید نادرست است');
+            }
+        }
+        
+        // تکمیل پروفایل
+        function completeProfile() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            
+            if (!firstName || !lastName) {
+                alert('لطفاً نام و نام خانوادگی را وارد کنید');
+                return;
+            }
+            
+            // ذخیره کاربر
+            const userData = {
+                phone: userPhone,
+                firstName: firstName,
+                lastName: lastName,
+                joinDate: new Date().toLocaleDateString('fa-IR')
+            };
+            
+            localStorage.setItem('currentUser', JSON.stringify(userData));
+            
+            // نمایش اطلاعات در پروفایل
+            document.getElementById('displayName').textContent = `${firstName} ${lastName}`;
+            document.getElementById('displayPhone').textContent = `شماره تماس: ${userPhone}`;
+            
+            changeStep(4);
+        }
+        
+        // خروج
+        function logout() {
+            localStorage.removeItem('currentUser');
+            changeStep(1);
+            alert('با موفقیت خارج شدید');
+        }
+        
+        // بررسی کاربر لاگین کرده
+        function checkLoggedInUser() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                try {
+                    const user = JSON.parse(savedUser);
+                    document.getElementById('displayName').textContent = `${user.firstName} ${user.lastName}`;
+                    document.getElementById('displayPhone').textContent = `شماره تماس: ${user.phone}`;
+                    changeStep(4);
+                } catch (e) {
+                    console.error('Error:', e);
+                }
+            }
+        }
+        
+        // بارگذاری اولیه
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoggedInUser();
+            
+            // فرمت خودکار شماره تلفن
+            document.getElementById('phone')?.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.startsWith('98')) value = '0' + value.substring(2);
+                if (value.length > 11) value = value.substring(0, 11);
+                e.target.value = value;
+            });
+        });
+    </script>
+</body>
+  </html>
